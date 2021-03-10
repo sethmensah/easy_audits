@@ -136,6 +136,3 @@ DATABASES['default'].update(db_from_env)
 #AUTH_USER_MODEL = 'app.CustomUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-LOGOUT_REDIRECT_URL = 'home'
-LOGIN_URL = 'login'
