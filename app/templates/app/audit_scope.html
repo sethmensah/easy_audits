@@ -1,0 +1,31 @@
+﻿{% extends "app/layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+     <div class="row"style="padding-top:50px;">
+           <div class="col-md-1"></div>
+           <div class="col-md-10" style="background-color:white;border-radius:5px;">
+               <h2 style="color:#17A2B8;font-weight:300;text-align:center;">Scope of Audit</h2><hr />
+                <form action="/scope/{{data.id}}/" method="post" id="ScopeForm" enctype="multipart/form-data" class="form" role="form">
+                    {% csrf_token %}
+                    <div class="mt-1 p-0">
+                        <div class="card-body">
+                            {% crispy form %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="hidden" name="next" value="/dashboard" />
+                            <input type="submit" value="Create Scope" class="btn btn-sm btn-info" />
+                            <a href="{% url 'dashboard' %}" class="btn btn-sm btn-danger">Cancel</a><br />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-1"></div>
+      </div>
+</div>
+ 
+{% endblock %}

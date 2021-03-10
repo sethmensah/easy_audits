@@ -1,0 +1,94 @@
+{% extends "app/layout.html" %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if entity %} 
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-0 mb-0 border-bottom">
+        <h1 class="teal-text"style="text-align:center;">{{title}}</h1>
+        <div class="mb-0 pb-0">
+            <div class="ml-auto">
+                <nav aria-label="breadcrumb" style="font-size:small;">
+                    <ol class="breadcrumb" style="background-color:transparent;margin-bottom:0;">
+                        <li class="breadcrumb-item ml-auto"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'entity' %}">Add Entity</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <div class = "card mb-4 mt-2">
+		<div class="card-body">
+         {% for entry in entity %}
+                <h4 class="lead" style="text-align:center;">{{entry.facility_name|title}}</h4><hr class="mb-0 mt-0"/>
+                <p class="heading">Available Audits (&nbsp;<a href="#modalcenter" role="button" class="btn-modal" data-toggle="modal" style="text-decoration:none">Procurement Audit</a> | 
+            <a  href="{% url 'modal_view' entry.id %}" role="button" data-target="#modalcenter" data-toggle="modal" class="btn-modal" style="text-decoration:none">Expenditure Audit</a> | <a href="#" style="text-decoration:none">Payroll Audit</a>&nbsp;)</p>
+            {% if scope %}
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-sm table-hover" id="tblentity" style="padding-bottom:1em; font-size:small;">
+                    <thead style="color:#17a2b8;">
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>Period Covered</th>
+                            <th>Review Date</th>
+                            <th>Activity</th>
+                            <th>Report</th>
+                        </tr>
+                    </thead>
+                    <caption>Expenditure Audits</caption>
+                    <tbody>
+                        {% for ent in scope %}
+                        <tr>
+                            <td class="text-center">{{forloop.counter}}</td>
+                            <td>{{ent.period_covered }}</td>
+                            <td>{{ent.review_date |date:'d F  Y'}}</td>                            
+                            <td><a style="text-decoration:none;" href="{% url 'create_expense' ent.id %}">Add New Records</a></td>                            
+                            <td><a style="text-decoration:none;" href="{% url 'create_expense' ent.id %}">Generate Report</a></td>                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+                {% include 'app/audit_scope.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    
+
+    {% else %}
+    <div class="section">
+        <div style="padding-left:10px;">
+            <h2 class="header-text text-center">No Audit History.</h2>
+            <p class="text-center">Hello {{ user.username | title}}, you have not conducted audit on any of the facilities yet. 
+            Please click the link to your right to commence Audit.</p>
+            <div style="overflow:auto;" class="mt-4">
+		        <div style="float:right;">
+			        <a type="button" class="btn btn-sm btn-secondary" href ="{% url 'entity' %}">Start Audit</a>
+		        </div>
+	        </div>
+        </div><hr />
+    </div>
+
+    {% endif %}
+
+    
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $(".btn-modal").click(function () {
+                $("#modalcenter").modal({
+                    backdrop: "static",
+                    keyboard: false,
+                });
+            });
+        });
+       
+    </script>
+{% endblock %}

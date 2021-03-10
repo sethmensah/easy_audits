@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+{% load static %}
+
+{% load i18n %}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{{ title }} - easyAudit</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.min.css" integrity="sha512-CliXBuHwQxr4nHkBGnjI8GeVo/P3u+GN0OlXB22b7/0YZkMCKdt2a2G8CEHFk+fwGhRWyyAFib64f90kZoWBvQ==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha512-3n19xznO0ubPpSwYCRRBgHh63DrV+bdZfHK52b1esvId4GsfwStQNPJFjeQos2h3JwCmZl0/LgLxSKMAI55hgw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+</head>
+
+<body>
+    <div class='container' style="padding-left:7em;padding-right:7em;">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-0 mb-0 border-bottom">
+      
+        <div class="mb-0 pb-0">
+            <div class="mr-auto">
+                <nav aria-label="breadcrumb" style="font-size:small;">
+                    <ol class="breadcrumb" style="background-color:transparent;margin-bottom:0;">
+                        <li class="breadcrumb-item ml-auto"><a href="{% url 'dashboard' %}">Export PDF</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="header-text text-center">DRAFT INTERNAL AUDIT REPORT ON {{ data.facility_name | upper }}</h4><br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h5 class="header-text">1.0.0 INTRODUCTION </h5>
+            </div>
+            <div class="col-sm-12">
+                <p class="py-1">
+                As part of the 2017 Annual Audit Action Plan, the Regional Internal Audit Unit tasked the Internal Auditors from the 
+                unit to conduct an Audit on the Accounts of {{ data.facility_name |title }}. 
+                </p>    
+                <p> 
+                The exercise covered the financial and non-financial records of the 
+                {{ data.facility_name |title }} for the period {{ data.period_covered }}.  
+                </p>
+                <p>
+                The Internal Auditors obtained most of the information which to the best of their knowledge were necessary for the purpose of the audit.
+                </p>
+            </div>
+            <div class="col-sm-12">
+                <h5 class="header-text">2.0.0 Management Members</h5>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                    The underlisted constituted the management of {{data.facility_name | title}}.
+                </p>
+                {% if entry %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-sm table-hover" style="padding-bottom:1em; font-size:small;">
+                        <thead style="color:#17a2b8;">
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Member Name</th>
+                                <th>Member Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         {% for res in entry %}
+                            <tr>
+                                <td class="text-center">{{forloop.counter}}</td>
+                                <td>{{res.member_name | title}}</td>
+                                <td>{{res.member_position | title}}</td>
+                            </tr>
+                         {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-sm-12">
+                <h5 class="header-text">3.0.0 Scope of Audit</h5>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                    Pursuant to the objectives mentioned below, we reviewed the internal controls over the generation, 
+                    accounting and reporting of revenue and expenses for its adequacy and effectiveness for the period under review. 
+                </p>
+                <p>
+                    The exercise was expected to cover the following areas;
+                </p>
+                <ol>
+                    <li>Analysis of IGF usage</li>
+                    <li>Review of working capital </li>
+                    <li>Review of procurement activities and </li>
+                    <li>And other areas that may need attention.</li>
+                </ol>
+                <p>
+                    We further interviewed people for additional information which we considered necessary for the purpose of the audit. 
+                </p>
+            </div>
+
+            <div class="col-sm-12">
+                <h5 class="header-text">4.0.0 Audit Objectives</h5>
+            </div>
+            <p class="ml-3">
+                    It was in pursuant of the objectives below that the records of the {{data.facility_name | title}} were audited for the period under review.
+            </p>
+            <div class="col-sm-12">
+                <h5 class="header-text">4.0.1 IGF Usage</h5>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                   With regards to expenditure, the objective was; 
+                </p>
+                <ol>
+                    <li>To ensure that payments were made for goods and services received only. </li>
+                    <li>To ascertain the control and management of cash and evaluated them against the relevant provisions of Financial Administration Regulation, Accounting, 
+                    Treasury and Financial Reporting rules and instructions. </li>
+                    <li>That any expenditure from the IGF is valid and adequately supported by all relevant documents of expenditure. </li>
+                    <li>That relevant laws and regulations, policies and procedures are followed in incurring expenditures </li>
+                </ol>
+            </div>
+
+            <div class="col-sm-12">
+                <h5 class="header-text">4.0.2 Working capital</h5>
+            </div>
+            <div class="col-sm-12">
+                <ol>
+                    <li>To ascertain whether {{data.facility_name | title}}, upon valuing its stocks/assets  
+                    in addition to accounts receivable and bank balances, would be able to pay off all indebtedness when due. </li>
+                </ol>
+            </div>
+
+            <div class="col-sm-12">
+                <h5 class="header-text">4.0.3 Procurement</h5>
+            </div>
+            <div class="col-sm-12">
+                <ol>
+                    <li>To ascertain management adherence to procurement procedures as stipulated in the Public Procurement Act, 2003 (Act 663). </li>
+                </ol>
+            </div>
+            
+            <div class="col-sm-12">
+                <h5 class="header-text">5.0.0 Audit Methodology </h5>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                    In compliance with the above objectives, the general control environment of the facility was assessed and 
+                    checked for their level of compliance with; 
+                </p>
+                <ol>
+                    <li>Provisions of the Financial Administration Regulation (FAR). </li>
+                    <li>Public Procurement Act, 2003 (Act 663) </li>
+                    <li>Ghana Health Service (GHS) policies and procedures enshrined in the ATF rules and instructions in relation to revenue collections and bank lodgments </li>                  
+                </ol>
+            </div>
+            <div class="col-sm-12">
+                <h5 class="header-text">5.0.1 Pre-audit Activities </h5>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                    To ensure that our audit met the expectations of stakeholder, we designed audit program (check list) to guide the audit 
+                    team to perform specific audit task gathering, analyzing and evaluating evidence. We organized a short period training to
+                    equip the team to accomplish the intended objectives necessary, to obtain sufficient competent evidential matters responsive
+                    to the audit objectives. 
+                </p>
+            </div>
+            <div class="col-sm-12">
+                <h5 class="header-text">5.0.2 On-Site Audit Activities </h5>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                    We began the on-site audit with an entrance meeting with  auditee  management team. At this meeting we discussed key issues
+                    relating to the   audit for cooperation and support of management for timely completion of the  assignment. This was  
+                    followed with examination of records and documents as well as  interviews, where necessary, to obtain sufficient competent
+                    evidential matters responsive to  the audit objectives.
+                </p>
+            </div>
+            <div class="col-sm-12">
+                <h5 class="header-text">5.0.3 Post Audit Activities </h5>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                    Exit conference was held with management members of {{data.facility_name | title}}. The primary purpose was to ensure that together we arrive 
+                    at mutual understanding of the  findings, and propose recommendations to be included in the final Audit Report. 
+                </p>
+            </div><div><pdf:next-page/></div>
+            <!----Executive Summary starts here--->
+            {% include 'app/reports/executive_summary.html' %}
+
+            <!----Details of findings starts here--->
+            {% include 'app/reports/detail_findings.html' %}
+
+
+        </div>       
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<div class="col-sm-12">
+    <h5 class="header-text">6.0.0 Significant Findings </h5>
+</div>
+<div class="col-sm-12">
+    
+    <ol>
+    {% for k,v in info %}
+        <li class="py-1">{{ k  }} ( {{ v |floatformat:2 }} )</li>
+      {% endfor %}                 
+    </ol>
+   
+</div>
+
+<div class="col-sm-12">
+    <h5 class="header-text">7.0.0 Recommendations </h5>
+</div>
+<div class="col-sm-12">
+    
+    <ol>
+    {% for k,v in recommendation.items|dictsort:"0.lower" %}
+        {% for key,value in info %}
+            {% if k == key %}
+                <li>{{ k }} ( {{ value |floatformat:2 }} )</li>
+                <content class="py-2">{{v |floatformat:2 }}</content>
+            {% endif %}
+         {% endfor %}                 
+     {% endfor %}                 
+    </ol>
+   
+</div><div><pdf:next-page/></div>

@@ -1,0 +1,188 @@
+{% extends 'app/layout.html' %}
+
+
+{% load crispy_forms_tags %}
+
+{% load static %} 
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-0 mb-0 border-bottom">
+    <h1 class="teal-text"style="text-align:center;"> {{title}}</h1>
+    <div class="mb-0 pb-0">
+        <div class="ml-auto">
+            <nav aria-label="breadcrumb" style="font-size:small;">
+                <ol class="breadcrumb" style="background-color:transparent;margin-bottom:0;">
+                    <li class="breadcrumb-item ml-auto"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="#">Entity Details</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+ 
+<form action="{% url 'entity' %}" method="post" id="EntityForm" enctype="multipart/form-data" data-cities-url="{% url 'ajax_load_districts' %}" data-facilities-url="{% url 'ajax_load_facilities' %}" style="padding-bottom:40px;">
+    {% csrf_token %}
+    <div class="tabs mt-4">
+        <h2 class="mb-4 header-text text-center">Entity Information</h2>
+        <div class = "card mb-4">
+		    <div class="card-body">
+                 {% crispy form %}
+            </div>
+        </div>
+    </div>
+    <div class="tabs mt-4">
+        <h2 class="mb-4 header-text text-center">Management Information</h2>
+        <div class = "card mb-4">
+            {{ management.management_form }}
+            {{ management.non_form_errors }}
+		    <div class="card-body">
+                <table class = "table table-responsive w-100 d-block d-md-table">                
+                {% for f in management %}
+                    {{ f.id }}
+                    <tr class="{% cycle 'row1' 'row2' %} management {{ management.prefix }}">
+                          <td style="width:auto;">
+                              {% crispy f %}
+                          </td>
+                    </tr>
+                {% endfor %}
+                 </table>
+            </div>
+        </div>
+    </div>
+    <div class="tabs mt-4">
+        <h2 class="mb-4 header-text text-center">Auditor Information</h2>
+        <div class = "card mb-4">
+            {{ auditor.management_form }}
+            {{ auditor.non_form_errors }}
+		    <div class="card-body">
+                <table class = "table table-responsive w-100 d-block d-md-table">              
+                {% for f in auditor %}
+                     {{ f.id }}
+                    <tr class="{% cycle 'row1' 'row2' %} auditor {{ auditor.prefix }}">
+                          <td style="width:auto;">
+                              {% crispy f %}
+                          </td>
+                    </tr>
+                {% endfor %}
+                 </table>
+            </div>
+        </div>
+    </div> 
+    <div style="overflow:auto;" class="mt-4">
+		<div style="float:right;">
+			<button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+			<button type="button" id="nextBtn" onclick="nextPrev(1)">Save and Continue</button>
+		</div>
+	</div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/moment.min.js" integrity="sha512-i2CVnAiguN6SnJ3d2ChOOddMWQyvgQTzm0qSgiKhOqBMGCx4fGU5BtzXEybnKatWPDkXPFyCI0lbG42BnVjr/Q==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.min.js" integrity="sha512-FEzFjtAJCunp3uJTwYfcHtJHlRbgkzRYNpvsShtjVu5jSoejpExyzHHSDOUJ46IgV7VoNAkuVxjbid5pkoLASg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.min.js" integrity="sha512-ltwjKsDTo3hW/wV66ZaEkf2wOAFxmg7rWM76J8kOcYKLSKy44WBYO/BFaNNH3NGDS8BSz3meB9wtSnm41oL+pA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha512-qWVvreMuH9i0DrugcOtifxdtZVBBL0X75r9YweXsdCHtXUidlctw7NXg5KVP3ITPtqZ2S575A0wFkvgS2anqSA==" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'app/content/site.js' %}"></script>
+
+    
+
+<script type="text/javascript">
+        $('.management.{{ management.prefix }}').formset({
+        addText: 'add another',
+        deleteText: 'remove',
+        addCssClass: 'btn btn-sm btn-info',
+        prefix: '{{ management.prefix }}',
+    });
+
+        $('.auditor.{{ auditor.prefix }}').formset({
+        addText: 'add another',
+        deleteText: 'remove',
+        addCssClass: 'btn btn-sm btn-info',
+        prefix: '{{ auditor.prefix }}',
+    });
+            
+
+</script>
+
+<script type="text/javascript">
+    var currentTab = 0;
+
+    showTab(currentTab);
+
+    function showTab(n) {
+        // This function will display the specified tab of the form...
+        var x = document.getElementsByClassName("tabs");
+
+        x[n].style.display = "block";
+        //... and fix the Previous/Next buttons:
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Submit";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+    }
+    function nextPrev(n) {
+        // This function will figure out which tab to display
+        var x = document.getElementsByClassName("tabs");
+        x[currentTab].style.display = "none";
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+        if (currentTab >= x.length) {
+            document.getElementById("EntityForm").submit();
+            return false;
+        }
+        showTab(currentTab);
+    }
+
+    $(document).ready(function () {
+        $('#saveBtn').click(function () {
+            $('#EntityForm').submit();
+        });
+    });
+</script>
+
+<script>
+ 
+    $("#id_region_name").change(function () {
+      var url = $("#EntityForm").attr("data-cities-url");
+      var regionId = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'region': regionId
+        },
+        success: function (data) {
+          $("#id_district_name").html(data);
+        }
+      });
+
+    });
+
+
+    $("#id_district_name").change(function () {
+      var url = $("#EntityForm").attr("data-facilities-url");
+      var districtId = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'district': districtId
+        },
+        success: function (data) {
+          $("#id_facility_name").html(data);
+        }
+      });
+
+    });
+
+  </script>
+
+{% endblock %}

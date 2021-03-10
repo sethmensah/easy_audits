@@ -1,0 +1,6 @@
+<option value="">----------</option>
+
+
+{% for types in ty %}
+	<option value="{{ types.pk }}">{{ types.type_name | title }}</option>
+{% endfor %}

@@ -1,0 +1,75 @@
+
+<div class="col-sm-12">
+    <h5 class="header-text">8.0.0 Details of Significant Findings</h5>
+</div>
+<div class="col-sm-12">
+    <ul class="navbar-nav ml-4">
+    {% for k,v in info %}
+        
+        {% if k == "Payment Vouchers not Pre-Audited" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/voucher_not_audited.html' %}
+        {% endif %}
+
+        {% if k == "Unapproved Payment Vouchers" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/unapproved_pvs.html' %}
+        {% endif %}
+
+        {% if k == "No evidence of receipt by beneficiaries" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/receipt_beneficiaries.html' %}
+        {% endif %}
+
+        {% if k == "Payment Vouchers without Requisite Supporting Documents" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/without_requisite_documents_attached.html' %}
+        {% endif %}
+
+        {% if k == "Payment Vouchers not signed by recipient" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/pv_not_signed_by_recipient.html' %}
+        {% endif %}
+
+        {% if k == "Payments without memo" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/payments_without_memo.html' %}
+        {% endif %}
+
+        {% if k == "Non Payment of SSF Contribution For Casual/Temporary Staff" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/casual_ssf_contribution.html' %}
+        {% endif %}
+
+        {% if k == "Cash payments to Suppliers" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/cash_payments_to_suppliers.html' %}
+        {% endif %}
+
+        {% if k == "Failure to obtain fuel receipts" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/no_fuel_receipts.html' %}
+        {% endif %}
+
+        {% if k == "Unjustified payments" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/unjustified_payments.html' %}
+        {% endif %}
+
+        {% if k == "Failure to deduct withholding tax" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/failure_to_deduct_withholding_tax.html' %}
+        {% endif %}
+
+        {% if k == "Double Payment" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/double_payment.html' %}
+        {% endif %}
+
+        {% if k == "Payments not Accounted for" %}
+            <li class="pt-2 pb-2">{{ k | upper}} ( {{ v }} )</li>
+            {% include 'app/reports/conditions/payments_not_accounted_for.html' %}
+        {% endif %}
+      {% endfor %}                 
+    </ul>
+</div><div><pdf:next-page/></div>

@@ -1,0 +1,83 @@
+{% extends "app/layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pb-0 mb-0 border-bottom">
+    <h1 class="teal-text" style="text-align:center;"> {{title}}</h1>
+    <div class="mb-0 pb-0">
+        <div class="ml-auto">
+            <nav aria-label="breadcrumb" style="font-size:small;">
+                <ol class="breadcrumb" style="background-color:transparent;margin-bottom:0;">
+                    <li class="breadcrumb-item ml-auto"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="#">Expenditure Audit</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<form action="/create-expense/{{data.id}}/" method="post" id="EntityForm" enctype="multipart/form-data" expense-type-url="{% url 'ajax_expense_type' %}" novalidate>
+    {% csrf_token %}
+    <div class="tab mt-3">
+        <div class="card mb-4">
+            <h2 class="mb-1 mt-1 text-center">Expense Details Form - {{data.period_covered }}</h2>
+            <div class="card-body">
+                {% crispy form %}
+            </div>
+        </div>
+    </div>
+
+    <div style="overflow:auto;" class="mt-4">
+        <div style="float:right;">
+            <button type="submit" name="submit">Save and Add New</button>
+            <button type="button" href="{% url 'dashboard' %}">Cancel</button>
+
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+        function renewDates(){
+            $(".dateinput").daterangepicker('destroy');
+            $(".dateinput").daterangepicker({
+                singleDatePicker: true,
+                autoUpdateInput: true,
+                drops: 'down',
+            });
+        }
+        $(renewDates);
+
+        $(document).ready(function(){
+        $(".add_expense").click(function(){
+        $("tr.row1.expenses.dynamic-form:not(:last-of-type)").hide();
+            });
+        });
+</script>
+<script>
+    $("#id_category").change(function () {
+      var url = $("#EntityForm").attr("expense-type-url");
+        var cateId = $(this).val();
+        console.log(cateId);
+
+      $.ajax({
+        url: url,
+        data: {
+          'category': cateId
+        },
+          success: function (data) {
+              $("#id_expense_type").html(data);
+          }
+      });
+
+    });
+
+</script>
+{% endblock %}
