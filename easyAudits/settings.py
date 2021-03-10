@@ -133,6 +133,6 @@ django_heroku.settings(locals())
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
-#AUTH_USER_MODEL = 'app.CustomUser'
+AUTH_USER_MODEL = 'app.CustomUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
