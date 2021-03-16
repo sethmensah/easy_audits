@@ -206,6 +206,11 @@ EntityForm tr.row1.expenses.dynamic-form:not(:last-of-type) {
         -webkit-transition: All 0.5s ease-in;
         -moz-transition: All 0.5s ease-in;
         -o-transition: All 0.5s ease-in;
+        font-size: .850rem;
+    }
+
+#EntityForm select {
+        font-size: 12px !important;
     }
 
 ul ul a {
